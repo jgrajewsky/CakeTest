@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","562");
+		_this.setReserved("build","618");
 	} else {
-		_this.h["build"] = "562";
+		_this.h["build"] = "618";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1031,25 +1031,8 @@ var Main = function() {
 		tttt.position = this1;
 		var this2 = new cake_engine__$Vector3_Vector3Impl(Math.random() * 360.0,Math.random() * 360.0,Math.random() * 360.0);
 		tttt.rotation = this2;
-		var this_hasChanged = true;
-		var this_x = 1.0;
-		this_hasChanged = true;
-		var this_y = 1.0;
-		this_hasChanged = true;
-		var this_z = 1.0;
-		this_hasChanged = true;
-		var this3 = new cake_engine__$Vector3_Vector3Impl(this_x,this_y,this_z);
-		var this4 = this3;
-		var _g1 = this4;
-		_g1.x *= 0.2;
-		_g1.hasChanged = true;
-		var _g2 = this4;
-		_g2.y *= 0.2;
-		_g2.hasChanged = true;
-		var _g3 = this4;
-		_g3.z *= 0.2;
-		_g3.hasChanged = true;
-		tttt.scale = this4;
+		var this3 = new cake_engine__$Vector3_Vector3Impl(-0.2,-0.2,-0.2);
+		tttt.scale = this3;
 		var aa = mesh.addComponent(cake_engine_MeshRenderer);
 		aa.onCreate();
 	}
@@ -1176,7 +1159,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 178, className : "Main", methodName : "update"});
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 179, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -1496,9 +1479,16 @@ cake_engine_Component.prototype = {
 	,__class__: cake_engine_Component
 };
 var cake_engine_Camera = function() {
+	var array = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+	var this1;
+	if(array != null) {
+		this1 = new Float32Array(array);
+	} else {
+		this1 = null;
+	}
+	this.floatArray = this1;
 	this.matrix = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-	this.hasChanged = true;
-	this.zFar = 10000.0;
+	this.zFar = 5000.0;
 	this.zNear = 1.0;
 	this.fieldOfView = 60.0;
 	cake_engine_Component.call(this);
@@ -1507,114 +1497,7 @@ $hxClasses["cake.engine.Camera"] = cake_engine_Camera;
 cake_engine_Camera.__name__ = "cake.engine.Camera";
 cake_engine_Camera.__super__ = cake_engine_Component;
 cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
-	set_fieldOfView: function(value) {
-		this.fieldOfView = value;
-		this.hasChanged = true;
-		return this.fieldOfView;
-	}
-	,set_zNear: function(value) {
-		this.zNear = value;
-		this.hasChanged = true;
-		return this.zNear;
-	}
-	,set_zFar: function(value) {
-		this.zFar = value;
-		this.hasChanged = true;
-		return this.zFar;
-	}
-	,render: function() {
-		if(this.hasChanged) {
-			this.rebuildMatrix();
-			this.hasChanged = false;
-		}
-		this.entity.transform.rebuildMatrix(true);
-		var viewProj = cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiply(this.matrix,this.entity.transform.matrix);
-		var location = Main.gl.getUniformLocation(Main.shader.program,"u_matrix");
-		var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-		var temp = this1;
-		var elements = null;
-		var this2 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-		var array = this2;
-		var view = null;
-		var buffer = null;
-		var len = null;
-		var this3;
-		if(elements != null) {
-			this3 = new Float32Array(elements);
-		} else if(array != null) {
-			this3 = new Float32Array(array);
-		} else if(view != null) {
-			this3 = new Float32Array(view);
-		} else if(buffer != null) {
-			if(len == null) {
-				this3 = new Float32Array(buffer,0);
-			} else {
-				this3 = new Float32Array(buffer,0,len);
-			}
-		} else {
-			this3 = null;
-		}
-		var f32a = this3;
-		var _g = 0;
-		var _g1 = cake_engine_MeshRenderer.all;
-		while(_g < _g1.length) {
-			var renderer = _g1[_g];
-			++_g;
-			var this4 = renderer.entity.transform.rotation;
-			var other = cake_engine_Time.deltaTime * 5.0;
-			var _g2 = this4;
-			_g2.x += other;
-			_g2.hasChanged = true;
-			var _g3 = this4;
-			_g3.y += other;
-			_g3.hasChanged = true;
-			var _g4 = this4;
-			_g4.z += other;
-			_g4.hasChanged = true;
-			renderer.entity.transform.rebuildMatrix(false);
-			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.copy(temp,viewProj);
-			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(temp,renderer.entity.transform.matrix);
-			f32a[0] = temp[0];
-			f32a[1] = temp[1];
-			f32a[2] = temp[2];
-			f32a[3] = temp[3];
-			f32a[4] = temp[4];
-			f32a[5] = temp[5];
-			f32a[6] = temp[6];
-			f32a[7] = temp[7];
-			f32a[8] = temp[8];
-			f32a[9] = temp[9];
-			f32a[10] = temp[10];
-			f32a[11] = temp[11];
-			f32a[12] = temp[12];
-			f32a[13] = temp[13];
-			f32a[14] = temp[14];
-			f32a[15] = temp[15];
-			lime_graphics__$WebGLRenderContext_WebGLRenderContext_$Impl_$.uniformMatrix4fv(Main.gl,location,false,f32a);
-			Main.gl.drawArrays(Main.gl.TRIANGLES,0,96);
-		}
-	}
-	,rebuildMatrix: function() {
-		var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfView * 0.01745329252);
-		var rangeInv = 1.0 / (this.zNear - this.zFar);
-		this.matrix[0] = f / (cake_engine_Screen.width / cake_engine_Screen.height);
-		var value = this.matrix[1] = 0.0;
-		var value1 = this.matrix[2] = value;
-		var value2 = this.matrix[3] = value1;
-		var value3 = this.matrix[4] = value2;
-		var value4 = this.matrix[6] = value3;
-		var value5 = this.matrix[7] = value4;
-		var value6 = this.matrix[8] = value5;
-		var value7 = this.matrix[9] = value6;
-		var value8 = this.matrix[12] = value7;
-		var value9 = this.matrix[13] = value8;
-		this.matrix[15] = value9;
-		this.matrix[5] = f;
-		this.matrix[10] = (this.zNear + this.zFar) * rangeInv;
-		this.matrix[11] = -1.0;
-		this.matrix[14] = this.zNear * this.zFar * rangeInv * 2.0;
-	}
-	,onUpdate: function() {
+	onUpdate: function() {
 		var speed = cake_engine_Time.deltaTime * 100.0;
 		if(cake_engine_Input.keyStates[120] != 0) {
 			var this1 = this.entity.transform.position;
@@ -1773,37 +1656,96 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g17.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[166] != 0) {
-			var this13 = this.entity.transform.rotation;
-			var this_hasChanged = true;
-			var this_x = cake_engine_Input.mouseDelta.y;
-			this_hasChanged = true;
-			var this_y = cake_engine_Input.mouseDelta.x;
-			this_hasChanged = true;
-			var this_z = 0.0;
-			this_hasChanged = true;
-			var other_hasChanged6 = true;
-			var other_x6 = this_x;
-			other_hasChanged6 = true;
-			var other_y6 = this_y;
-			other_hasChanged6 = true;
-			var other_z6 = this_z;
-			other_hasChanged6 = true;
-			other_x6 *= 0.1;
-			other_hasChanged6 = true;
-			other_y6 *= 0.1;
-			other_hasChanged6 = true;
-			other_z6 *= 0.1;
-			other_hasChanged6 = true;
-			var _g18 = this13;
-			_g18.x -= other_x6;
+			var _this = this.entity.transform.rotation;
+			var value = this.entity.transform.rotation.x - cake_engine_Input.mouseDelta.y * 0.1;
+			var a = value > -90.0 ? value : -90.0;
+			_this.x = a < 90.0 ? a : 90.0;
+			_this.hasChanged = true;
+			var _g18 = this.entity.transform.rotation;
+			_g18.y -= cake_engine_Input.mouseDelta.x * 0.1;
 			_g18.hasChanged = true;
-			var _g19 = this13;
-			_g19.y -= other_y6;
+		}
+		if(cake_engine_Input.keyStates[114] != 0) {
+			var _g19 = this.entity.transform.rotation;
+			_g19.z += speed;
 			_g19.hasChanged = true;
-			var _g20 = this13;
-			_g20.z -= other_z6;
+		}
+		if(cake_engine_Input.keyStates[102] != 0) {
+			var _g20 = this.entity.transform.rotation;
+			_g20.z -= speed;
 			_g20.hasChanged = true;
 		}
+	}
+	,render: function() {
+		this.rebuildMatrix();
+		this.entity.transform.rebuildMatrix(true);
+		cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,this.entity.transform.matrix);
+		var location = Main.gl.getUniformLocation(Main.shader.program,"u_matrix");
+		var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+		var render = this1;
+		var a = true;
+		var _g = 0;
+		var _g1 = cake_engine_MeshRenderer.all;
+		while(_g < _g1.length) {
+			var renderer = _g1[_g];
+			++_g;
+			var this2 = renderer.entity.transform.rotation;
+			var other = cake_engine_Time.deltaTime * 5.0;
+			var _g2 = this2;
+			_g2.x += other;
+			_g2.hasChanged = true;
+			var _g3 = this2;
+			_g3.y += other;
+			_g3.hasChanged = true;
+			var _g4 = this2;
+			_g4.z += other;
+			_g4.hasChanged = true;
+			renderer.entity.transform.rebuildMatrix(false);
+			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.copy(render,this.matrix);
+			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(render,renderer.entity.transform.matrix);
+			this.floatArray[0] = render[0];
+			this.floatArray[1] = render[1];
+			this.floatArray[2] = render[2];
+			this.floatArray[3] = render[3];
+			this.floatArray[4] = render[4];
+			this.floatArray[5] = render[5];
+			this.floatArray[6] = render[6];
+			this.floatArray[7] = render[7];
+			this.floatArray[8] = render[8];
+			this.floatArray[9] = render[9];
+			this.floatArray[10] = render[10];
+			this.floatArray[11] = render[11];
+			this.floatArray[12] = render[12];
+			this.floatArray[13] = render[13];
+			this.floatArray[14] = render[14];
+			this.floatArray[15] = render[15];
+			lime_graphics__$WebGLRenderContext_WebGLRenderContext_$Impl_$.uniformMatrix4fv(Main.gl,location,false,this.floatArray);
+			var x = renderer.entity.transform.scale.x >= 0.0;
+			var y = renderer.entity.transform.scale.y >= 0.0;
+			var z = renderer.entity.transform.scale.z >= 0.0;
+			Main.gl.cullFace(x && y && z || !x && y && z || x && !y && z || x && y && !z ? Main.gl.BACK : Main.gl.FRONT);
+			Main.gl.drawArrays(Main.gl.TRIANGLES,0,96);
+		}
+	}
+	,rebuildMatrix: function() {
+		var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfView * 0.01745329252);
+		var rangeInv = 1.0 / (this.zNear - this.zFar);
+		this.matrix[0] = f / (cake_engine_Screen.width / cake_engine_Screen.height);
+		var value = this.matrix[1] = 0.0;
+		var value1 = this.matrix[2] = value;
+		var value2 = this.matrix[3] = value1;
+		var value3 = this.matrix[4] = value2;
+		var value4 = this.matrix[6] = value3;
+		var value5 = this.matrix[7] = value4;
+		var value6 = this.matrix[8] = value5;
+		var value7 = this.matrix[9] = value6;
+		var value8 = this.matrix[12] = value7;
+		var value9 = this.matrix[13] = value8;
+		this.matrix[15] = value9;
+		this.matrix[5] = f;
+		this.matrix[10] = (this.zNear + this.zFar) * rangeInv;
+		this.matrix[11] = -1.0;
+		this.matrix[14] = this.zNear * this.zFar * rangeInv * 2.0;
 	}
 	,__class__: cake_engine_Camera
 });
@@ -2856,17 +2798,6 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 			var rad;
 			var cos;
 			var sin;
-			if(this.rotation.z != 0.0) {
-				rad = this.rotation.z * 0.01745329252;
-				cos = Math.cos(rad);
-				sin = Math.sin(rad);
-				other[5] = other[0] = cos;
-				other[1] = sin;
-				other[14] = other[13] = other[12] = other[11] = other[9] = other[8] = other[7] = other[6] = other[3] = other[2] = 0.0;
-				other[4] = -sin;
-				other[15] = other[10] = 1.0;
-				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
-			}
 			if(this.rotation.y != 0.0) {
 				rad = this.rotation.y * 0.01745329252;
 				cos = Math.cos(rad);
@@ -2887,6 +2818,17 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 				other[10] = other[5] = cos;
 				other[6] = sin;
 				other[9] = -sin;
+				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
+			}
+			if(this.rotation.z != 0.0) {
+				rad = this.rotation.z * 0.01745329252;
+				cos = Math.cos(rad);
+				sin = Math.sin(rad);
+				other[5] = other[0] = cos;
+				other[1] = sin;
+				other[14] = other[13] = other[12] = other[11] = other[9] = other[8] = other[7] = other[6] = other[3] = other[2] = 0.0;
+				other[4] = -sin;
+				other[15] = other[10] = 1.0;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
 			if(this.scale.x != 1.0 || this.scale.y != 1.0 || this.scale.z != 1.0) {
@@ -20618,7 +20560,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 194954;
+	this.version = 131662;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
