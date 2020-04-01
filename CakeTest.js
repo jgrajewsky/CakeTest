@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","618");
+		_this.setReserved("build","619");
 	} else {
-		_this.h["build"] = "618";
+		_this.h["build"] = "619";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1086,6 +1086,11 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		this1.x = x;
 		this1.y = y;
 	}
+	,onTouchMove: function(touch) {
+		var this1 = cake_engine_Input.mouseDelta;
+		this1.x = touch.dx;
+		this1.y = touch.dy;
+	}
 	,onWindowCreate: function() {
 		this.__window.__backend.setFrameRate(1000);
 		this.__window.set_resizable(true);
@@ -1159,7 +1164,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 179, className : "Main", methodName : "update"});
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 184, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -1664,16 +1669,6 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			var _g18 = this.entity.transform.rotation;
 			_g18.y -= cake_engine_Input.mouseDelta.x * 0.1;
 			_g18.hasChanged = true;
-		}
-		if(cake_engine_Input.keyStates[114] != 0) {
-			var _g19 = this.entity.transform.rotation;
-			_g19.z += speed;
-			_g19.hasChanged = true;
-		}
-		if(cake_engine_Input.keyStates[102] != 0) {
-			var _g20 = this.entity.transform.rotation;
-			_g20.z -= speed;
-			_g20.hasChanged = true;
 		}
 	}
 	,render: function() {
@@ -20560,7 +20555,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 131662;
+	this.version = 267289;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
