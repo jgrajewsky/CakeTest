@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","619");
+		_this.setReserved("build","620");
 	} else {
-		_this.h["build"] = "619";
+		_this.h["build"] = "620";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1086,10 +1086,16 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		this1.x = x;
 		this1.y = y;
 	}
+	,onTouchStart: function(touch) {
+		cake_engine_Input.setKey(166,true);
+	}
 	,onTouchMove: function(touch) {
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = touch.dx;
 		this1.y = touch.dy;
+	}
+	,onTouchEnd: function(touch) {
+		cake_engine_Input.setKey(166,false);
 	}
 	,onWindowCreate: function() {
 		this.__window.__backend.setFrameRate(1000);
@@ -1164,7 +1170,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 184, className : "Main", methodName : "update"});
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 192, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -20555,7 +20561,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 267289;
+	this.version = 778299;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
