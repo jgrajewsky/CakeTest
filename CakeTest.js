@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","620");
+		_this.setReserved("build","692");
 	} else {
-		_this.h["build"] = "620";
+		_this.h["build"] = "692";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1100,6 +1100,8 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 	,onWindowCreate: function() {
 		this.__window.__backend.setFrameRate(1000);
 		this.__window.set_resizable(true);
+		this.__window.set_width(1920);
+		this.__window.set_height(600);
 		cake_engine_Screen.width = this.__window.__width;
 		cake_engine_Screen.height = this.__window.__height;
 		Main.gl = this.__window.context.webgl;
@@ -1170,7 +1172,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 192, className : "Main", methodName : "update"});
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 198, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -1501,7 +1503,9 @@ var cake_engine_Camera = function() {
 	this.matrix = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 	this.zFar = 5000.0;
 	this.zNear = 1.0;
-	this.fieldOfView = 60.0;
+	this.fieldOfView = 80.0;
+	this.size = 1000.0;
+	this.perspective = true;
 	cake_engine_Component.call(this);
 };
 $hxClasses["cake.engine.Camera"] = cake_engine_Camera;
@@ -1668,12 +1672,12 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 		}
 		if(cake_engine_Input.keyStates[166] != 0) {
 			var _this = this.entity.transform.rotation;
-			var value = this.entity.transform.rotation.x - cake_engine_Input.mouseDelta.y * 0.1;
+			var value = this.entity.transform.rotation.x - cake_engine_Input.mouseDelta.y * 0.05;
 			var a = value > -90.0 ? value : -90.0;
 			_this.x = a < 90.0 ? a : 90.0;
 			_this.hasChanged = true;
 			var _g18 = this.entity.transform.rotation;
-			_g18.y -= cake_engine_Input.mouseDelta.x * 0.1;
+			_g18.y -= cake_engine_Input.mouseDelta.x * 0.05;
 			_g18.hasChanged = true;
 		}
 	}
@@ -1729,24 +1733,47 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 		}
 	}
 	,rebuildMatrix: function() {
-		var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfView * 0.01745329252);
-		var rangeInv = 1.0 / (this.zNear - this.zFar);
-		this.matrix[0] = f / (cake_engine_Screen.width / cake_engine_Screen.height);
-		var value = this.matrix[1] = 0.0;
-		var value1 = this.matrix[2] = value;
-		var value2 = this.matrix[3] = value1;
-		var value3 = this.matrix[4] = value2;
-		var value4 = this.matrix[6] = value3;
-		var value5 = this.matrix[7] = value4;
-		var value6 = this.matrix[8] = value5;
-		var value7 = this.matrix[9] = value6;
-		var value8 = this.matrix[12] = value7;
-		var value9 = this.matrix[13] = value8;
-		this.matrix[15] = value9;
-		this.matrix[5] = f;
-		this.matrix[10] = (this.zNear + this.zFar) * rangeInv;
-		this.matrix[11] = -1.0;
-		this.matrix[14] = this.zNear * this.zFar * rangeInv * 2.0;
+		var ratio = cake_engine_Screen.width / cake_engine_Screen.height;
+		if(this.perspective) {
+			var left = -1.0 * this.size * ratio;
+			var right = -left;
+			var bottom = -1.0 * this.size;
+			var top = -bottom;
+			this.matrix[0] = 1.0 / -left;
+			var value = this.matrix[1] = 0.0;
+			var value1 = this.matrix[2] = value;
+			var value2 = this.matrix[3] = value1;
+			var value3 = this.matrix[4] = value2;
+			var value4 = this.matrix[6] = value3;
+			var value5 = this.matrix[7] = value4;
+			var value6 = this.matrix[8] = value5;
+			var value7 = this.matrix[9] = value6;
+			var value8 = this.matrix[11] = value7;
+			var value9 = this.matrix[12] = value8;
+			this.matrix[13] = value9;
+			this.matrix[5] = 1.0 / -bottom;
+			this.matrix[10] = -2.0 / (this.zFar - this.zNear);
+			this.matrix[14] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
+			this.matrix[15] = 1.0;
+		} else {
+			var tan = Math.tan(this.fieldOfView * 0.01745329252 / 2.0);
+			this.matrix[0] = 1.0 / (ratio * tan);
+			var value10 = this.matrix[1] = 0.0;
+			var value11 = this.matrix[2] = value10;
+			var value12 = this.matrix[3] = value11;
+			var value13 = this.matrix[4] = value12;
+			var value14 = this.matrix[6] = value13;
+			var value15 = this.matrix[7] = value14;
+			var value16 = this.matrix[8] = value15;
+			var value17 = this.matrix[9] = value16;
+			var value18 = this.matrix[12] = value17;
+			var value19 = this.matrix[13] = value18;
+			this.matrix[15] = value19;
+			this.matrix[5] = 1.0 / tan;
+			this.matrix[10] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
+			this.matrix[11] = -1.0;
+			this.matrix[14] = -(2.0 * this.zFar * this.zNear) / (this.zFar - this.zNear);
+		}
 	}
 	,__class__: cake_engine_Camera
 });
@@ -2741,14 +2768,14 @@ $hxClasses["cake.engine.Transform"] = cake_engine_Transform;
 cake_engine_Transform.__name__ = "cake.engine.Transform";
 cake_engine_Transform.__super__ = cake_engine_Component;
 cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
-	get_forward: function() {
-		return this.rotate(0.0,0.0,1.0);
-	}
-	,get_right: function() {
+	get_right: function() {
 		return this.rotate(1.0,0.0,0.0);
 	}
 	,get_up: function() {
 		return this.rotate(0.0,1.0,0.0);
+	}
+	,get_forward: function() {
+		return this.rotate(0.0,0.0,1.0);
 	}
 	,rotate: function(x,y,z) {
 		var rotZ = this.rotation.z * 0.01745329252 * 0.5;
@@ -20561,7 +20588,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 778299;
+	this.version = 341651;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
