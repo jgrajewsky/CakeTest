@@ -870,15 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-<<<<<<< HEAD
-		_this.setReserved("build","760");
+		_this.setReserved("build","618");
 	} else {
-		_this.h["build"] = "760";
-=======
-		_this.setReserved("build","562");
-	} else {
-		_this.h["build"] = "562";
->>>>>>> parent of 065feb0... Update CakeTest.js
+		_this.h["build"] = "618";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1031,39 +1025,14 @@ var Main = function() {
 	var _g = 0;
 	while(_g < 10000) {
 		var _ = _g++;
-		var mesh = new cake_engine_Entity("Mesh" + Math.random());
+		var mesh = new cake_engine_Entity("Mesh");
 		var tttt = mesh.addComponent(cake_engine_Transform);
 		var this1 = new cake_engine__$Vector3_Vector3Impl(Math.random() * 2000.0 - 1000.0,Math.random() * 2000.0 - 1000.0,Math.random() * 2000.0 - 1000.0);
-		tttt.localPosition = this1;
+		tttt.position = this1;
 		var this2 = new cake_engine__$Vector3_Vector3Impl(Math.random() * 360.0,Math.random() * 360.0,Math.random() * 360.0);
-<<<<<<< HEAD
-		tttt.localRotation = this2;
-=======
 		tttt.rotation = this2;
->>>>>>> parent of 065feb0... Update CakeTest.js
-		var this_hasChanged = true;
-		var this_x = 1.0;
-		this_hasChanged = true;
-		var this_y = 1.0;
-		this_hasChanged = true;
-		var this_z = 1.0;
-		this_hasChanged = true;
-		var this3 = new cake_engine__$Vector3_Vector3Impl(this_x,this_y,this_z);
-		var this4 = this3;
-		var _g1 = this4;
-		_g1.x *= 0.2;
-		_g1.hasChanged = true;
-		var _g2 = this4;
-		_g2.y *= 0.2;
-		_g2.hasChanged = true;
-		var _g3 = this4;
-		_g3.z *= 0.2;
-		_g3.hasChanged = true;
-<<<<<<< HEAD
-		tttt.localScale = this4;
-=======
-		tttt.scale = this4;
->>>>>>> parent of 065feb0... Update CakeTest.js
+		var this3 = new cake_engine__$Vector3_Vector3Impl(-0.2,-0.2,-0.2);
+		tttt.scale = this3;
 		var aa = mesh.addComponent(cake_engine_MeshRenderer);
 		aa.onCreate();
 	}
@@ -1116,17 +1085,6 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = x;
 		this1.y = y;
-	}
-	,onTouchStart: function(touch) {
-		cake_engine_Input.setKey(166,true);
-	}
-	,onTouchMove: function(touch) {
-		var this1 = cake_engine_Input.mouseDelta;
-		this1.x = touch.dx;
-		this1.y = touch.dy;
-	}
-	,onTouchEnd: function(touch) {
-		cake_engine_Input.setKey(166,false);
 	}
 	,onWindowCreate: function() {
 		this.__window.__backend.setFrameRate(1000);
@@ -1201,11 +1159,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-<<<<<<< HEAD
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 191, className : "Main", methodName : "update"});
-=======
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 178, className : "Main", methodName : "update"});
->>>>>>> parent of 065feb0... Update CakeTest.js
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 179, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -1525,132 +1479,29 @@ cake_engine_Component.prototype = {
 	,__class__: cake_engine_Component
 };
 var cake_engine_Camera = function() {
+	var array = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
+	var this1;
+	if(array != null) {
+		this1 = new Float32Array(array);
+	} else {
+		this1 = null;
+	}
+	this.floatArray = this1;
 	this.matrix = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-	this.hasChanged = true;
-	this.zFar = 10000.0;
+	this.zFar = 5000.0;
 	this.zNear = 1.0;
-	this.fieldOfView = 80.0;
-	this.size = 1000.0;
-	this.perspective = true;
+	this.fieldOfView = 60.0;
 	cake_engine_Component.call(this);
 };
 $hxClasses["cake.engine.Camera"] = cake_engine_Camera;
 cake_engine_Camera.__name__ = "cake.engine.Camera";
 cake_engine_Camera.__super__ = cake_engine_Component;
 cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
-	set_fieldOfView: function(value) {
-		this.fieldOfView = value;
-		this.hasChanged = true;
-		return this.fieldOfView;
-	}
-	,set_zNear: function(value) {
-		this.zNear = value;
-		this.hasChanged = true;
-		return this.zNear;
-	}
-	,set_zFar: function(value) {
-		this.zFar = value;
-		this.hasChanged = true;
-		return this.zFar;
-	}
-	,render: function() {
-		if(this.hasChanged) {
-			this.rebuildMatrix();
-			this.hasChanged = false;
-		}
-		this.entity.transform.rebuildMatrix(true);
-		var viewProj = cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiply(this.matrix,this.entity.transform.matrix);
-		var location = Main.gl.getUniformLocation(Main.shader.program,"u_matrix");
-		var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-		var temp = this1;
-		var elements = null;
-		var this2 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-		var array = this2;
-		var view = null;
-		var buffer = null;
-		var len = null;
-		var this3;
-		if(elements != null) {
-			this3 = new Float32Array(elements);
-		} else if(array != null) {
-			this3 = new Float32Array(array);
-		} else if(view != null) {
-			this3 = new Float32Array(view);
-		} else if(buffer != null) {
-			if(len == null) {
-				this3 = new Float32Array(buffer,0);
-			} else {
-				this3 = new Float32Array(buffer,0,len);
-			}
-		} else {
-			this3 = null;
-		}
-		var f32a = this3;
-		var _g = 0;
-		var _g1 = cake_engine_MeshRenderer.all;
-		while(_g < _g1.length) {
-			var renderer = _g1[_g];
-			++_g;
-			var this4 = renderer.entity.transform.rotation;
-			var other = cake_engine_Time.deltaTime * 5.0;
-			var _g2 = this4;
-			_g2.x += other;
-			_g2.hasChanged = true;
-			var _g3 = this4;
-			_g3.y += other;
-			_g3.hasChanged = true;
-			var _g4 = this4;
-			_g4.z += other;
-			_g4.hasChanged = true;
-			renderer.entity.transform.rebuildMatrix(false);
-			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.copy(temp,viewProj);
-			cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(temp,renderer.entity.transform.matrix);
-			f32a[0] = temp[0];
-			f32a[1] = temp[1];
-			f32a[2] = temp[2];
-			f32a[3] = temp[3];
-			f32a[4] = temp[4];
-			f32a[5] = temp[5];
-			f32a[6] = temp[6];
-			f32a[7] = temp[7];
-			f32a[8] = temp[8];
-			f32a[9] = temp[9];
-			f32a[10] = temp[10];
-			f32a[11] = temp[11];
-			f32a[12] = temp[12];
-			f32a[13] = temp[13];
-			f32a[14] = temp[14];
-			f32a[15] = temp[15];
-			lime_graphics__$WebGLRenderContext_WebGLRenderContext_$Impl_$.uniformMatrix4fv(Main.gl,location,false,f32a);
-			Main.gl.drawArrays(Main.gl.TRIANGLES,0,96);
-		}
-	}
-	,rebuildMatrix: function() {
-		var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfView * 0.01745329252);
-		var rangeInv = 1.0 / (this.zNear - this.zFar);
-		this.matrix[0] = f / (cake_engine_Screen.width / cake_engine_Screen.height);
-		var value = this.matrix[1] = 0.0;
-		var value1 = this.matrix[2] = value;
-		var value2 = this.matrix[3] = value1;
-		var value3 = this.matrix[4] = value2;
-		var value4 = this.matrix[6] = value3;
-		var value5 = this.matrix[7] = value4;
-		var value6 = this.matrix[8] = value5;
-		var value7 = this.matrix[9] = value6;
-		var value8 = this.matrix[12] = value7;
-		var value9 = this.matrix[13] = value8;
-		this.matrix[15] = value9;
-		this.matrix[5] = f;
-		this.matrix[10] = (this.zNear + this.zFar) * rangeInv;
-		this.matrix[11] = -1.0;
-		this.matrix[14] = this.zNear * this.zFar * rangeInv * 2.0;
-	}
-	,onUpdate: function() {
+	onUpdate: function() {
 		var speed = cake_engine_Time.deltaTime * 100.0;
 		if(cake_engine_Input.keyStates[120] != 0) {
-			var this1 = this.entity.transform.localPosition;
-			var _this = this.entity.transform;
-			var this2 = _this.rotate(_this.localRotation,0.0,0.0,1.0);
+			var this1 = this.entity.transform.position;
+			var this2 = this.entity.transform.rotate(0.0,0.0,1.0);
 			var other_hasChanged = true;
 			var other_x = this2.x;
 			other_hasChanged = true;
@@ -1675,9 +1526,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g2.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[116] != 0) {
-			var this3 = this.entity.transform.localPosition;
-			var _this1 = this.entity.transform;
-			var this4 = _this1.rotate(_this1.localRotation,0.0,0.0,1.0);
+			var this3 = this.entity.transform.position;
+			var this4 = this.entity.transform.rotate(0.0,0.0,1.0);
 			var other_hasChanged1 = true;
 			var other_x1 = this4.x;
 			other_hasChanged1 = true;
@@ -1702,9 +1552,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g5.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[98] != 0) {
-			var this5 = this.entity.transform.localPosition;
-			var _this2 = this.entity.transform;
-			var this6 = _this2.rotate(_this2.localRotation,1.0,0.0,0.0);
+			var this5 = this.entity.transform.position;
+			var this6 = this.entity.transform.rotate(1.0,0.0,0.0);
 			var other_hasChanged2 = true;
 			var other_x2 = this6.x;
 			other_hasChanged2 = true;
@@ -1729,9 +1578,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g8.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[101] != 0) {
-			var this7 = this.entity.transform.localPosition;
-			var _this3 = this.entity.transform;
-			var this8 = _this3.rotate(_this3.localRotation,1.0,0.0,0.0);
+			var this7 = this.entity.transform.position;
+			var this8 = this.entity.transform.rotate(1.0,0.0,0.0);
 			var other_hasChanged3 = true;
 			var other_x3 = this8.x;
 			other_hasChanged3 = true;
@@ -1756,9 +1604,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g11.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[132] != 0) {
-			var this9 = this.entity.transform.localPosition;
-			var _this4 = this.entity.transform;
-			var this10 = _this4.rotate(_this4.localRotation,0.0,1.0,0.0);
+			var this9 = this.entity.transform.position;
+			var this10 = this.entity.transform.rotate(0.0,1.0,0.0);
 			var other_hasChanged4 = true;
 			var other_x4 = this10.x;
 			other_hasChanged4 = true;
@@ -1783,9 +1630,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g14.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[8] != 0) {
-			var this11 = this.entity.transform.localPosition;
-			var _this5 = this.entity.transform;
-			var this12 = _this5.rotate(_this5.localRotation,0.0,1.0,0.0);
+			var this11 = this.entity.transform.position;
+			var this12 = this.entity.transform.rotate(0.0,1.0,0.0);
 			var other_hasChanged5 = true;
 			var other_x5 = this12.x;
 			other_hasChanged5 = true;
@@ -1810,15 +1656,24 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g17.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[166] != 0) {
-<<<<<<< HEAD
-			var _this6 = this.entity.transform.localRotation;
-			var value = this.entity.transform.localRotation.x - cake_engine_Input.mouseDelta.y * 0.05;
+			var _this = this.entity.transform.rotation;
+			var value = this.entity.transform.rotation.x - cake_engine_Input.mouseDelta.y * 0.1;
 			var a = value > -90.0 ? value : -90.0;
-			_this6.x = a < 90.0 ? a : 90.0;
-			_this6.hasChanged = true;
-			var _g18 = this.entity.transform.localRotation;
-			_g18.y -= cake_engine_Input.mouseDelta.x * 0.05;
+			_this.x = a < 90.0 ? a : 90.0;
+			_this.hasChanged = true;
+			var _g18 = this.entity.transform.rotation;
+			_g18.y -= cake_engine_Input.mouseDelta.x * 0.1;
 			_g18.hasChanged = true;
+		}
+		if(cake_engine_Input.keyStates[114] != 0) {
+			var _g19 = this.entity.transform.rotation;
+			_g19.z += speed;
+			_g19.hasChanged = true;
+		}
+		if(cake_engine_Input.keyStates[102] != 0) {
+			var _g20 = this.entity.transform.rotation;
+			_g20.z -= speed;
+			_g20.hasChanged = true;
 		}
 	}
 	,render: function() {
@@ -1828,12 +1683,13 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 		var location = Main.gl.getUniformLocation(Main.shader.program,"u_matrix");
 		var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 		var render = this1;
+		var a = true;
 		var _g = 0;
 		var _g1 = cake_engine_MeshRenderer.all;
 		while(_g < _g1.length) {
 			var renderer = _g1[_g];
 			++_g;
-			var this2 = renderer.entity.transform.localRotation;
+			var this2 = renderer.entity.transform.rotation;
 			var other = cake_engine_Time.deltaTime * 5.0;
 			var _g2 = this2;
 			_g2.x += other;
@@ -1864,86 +1720,33 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			this.floatArray[14] = render[14];
 			this.floatArray[15] = render[15];
 			lime_graphics__$WebGLRenderContext_WebGLRenderContext_$Impl_$.uniformMatrix4fv(Main.gl,location,false,this.floatArray);
-			var x = renderer.entity.transform.localScale.x >= 0.0;
-			var y = renderer.entity.transform.localScale.y >= 0.0;
-			var z = renderer.entity.transform.localScale.z >= 0.0;
+			var x = renderer.entity.transform.scale.x >= 0.0;
+			var y = renderer.entity.transform.scale.y >= 0.0;
+			var z = renderer.entity.transform.scale.z >= 0.0;
 			Main.gl.cullFace(x && y && z || !x && y && z || x && !y && z || x && y && !z ? Main.gl.BACK : Main.gl.FRONT);
 			Main.gl.drawArrays(Main.gl.TRIANGLES,0,96);
 		}
 	}
 	,rebuildMatrix: function() {
-		var ratio = cake_engine_Screen.width / cake_engine_Screen.height;
-		if(this.perspective) {
-			var tan = Math.tan(this.fieldOfView * 0.01745329252 / 2.0);
-			this.matrix[0] = 1.0 / (ratio * tan);
-			var value = this.matrix[1] = 0.0;
-			var value1 = this.matrix[2] = value;
-			var value2 = this.matrix[3] = value1;
-			var value3 = this.matrix[4] = value2;
-			var value4 = this.matrix[6] = value3;
-			var value5 = this.matrix[7] = value4;
-			var value6 = this.matrix[8] = value5;
-			var value7 = this.matrix[9] = value6;
-			var value8 = this.matrix[12] = value7;
-			var value9 = this.matrix[13] = value8;
-			this.matrix[15] = value9;
-			this.matrix[5] = 1.0 / tan;
-			this.matrix[10] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
-			this.matrix[11] = -1.0;
-			this.matrix[14] = -(2.0 * this.zFar * this.zNear) / (this.zFar - this.zNear);
-		} else {
-			this.matrix[0] = 1.0 / (this.size * ratio);
-			var value10 = this.matrix[1] = 0.0;
-			var value11 = this.matrix[2] = value10;
-			var value12 = this.matrix[3] = value11;
-			var value13 = this.matrix[4] = value12;
-			var value14 = this.matrix[6] = value13;
-			var value15 = this.matrix[7] = value14;
-			var value16 = this.matrix[8] = value15;
-			var value17 = this.matrix[9] = value16;
-			var value18 = this.matrix[11] = value17;
-			var value19 = this.matrix[12] = value18;
-			this.matrix[13] = value19;
-			this.matrix[5] = 1.0 / this.size;
-			this.matrix[10] = -2.0 / (this.zFar - this.zNear);
-			this.matrix[14] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
-			this.matrix[15] = 1.0;
-		}
+		var f = Math.tan(Math.PI * 0.5 - 0.5 * this.fieldOfView * 0.01745329252);
+		var rangeInv = 1.0 / (this.zNear - this.zFar);
+		this.matrix[0] = f / (cake_engine_Screen.width / cake_engine_Screen.height);
+		var value = this.matrix[1] = 0.0;
+		var value1 = this.matrix[2] = value;
+		var value2 = this.matrix[3] = value1;
+		var value3 = this.matrix[4] = value2;
+		var value4 = this.matrix[6] = value3;
+		var value5 = this.matrix[7] = value4;
+		var value6 = this.matrix[8] = value5;
+		var value7 = this.matrix[9] = value6;
+		var value8 = this.matrix[12] = value7;
+		var value9 = this.matrix[13] = value8;
+		this.matrix[15] = value9;
+		this.matrix[5] = f;
+		this.matrix[10] = (this.zNear + this.zFar) * rangeInv;
+		this.matrix[11] = -1.0;
+		this.matrix[14] = this.zNear * this.zFar * rangeInv * 2.0;
 	}
-=======
-			var this13 = this.entity.transform.rotation;
-			var this_hasChanged = true;
-			var this_x = cake_engine_Input.mouseDelta.y;
-			this_hasChanged = true;
-			var this_y = cake_engine_Input.mouseDelta.x;
-			this_hasChanged = true;
-			var this_z = 0.0;
-			this_hasChanged = true;
-			var other_hasChanged6 = true;
-			var other_x6 = this_x;
-			other_hasChanged6 = true;
-			var other_y6 = this_y;
-			other_hasChanged6 = true;
-			var other_z6 = this_z;
-			other_hasChanged6 = true;
-			other_x6 *= 0.1;
-			other_hasChanged6 = true;
-			other_y6 *= 0.1;
-			other_hasChanged6 = true;
-			other_z6 *= 0.1;
-			other_hasChanged6 = true;
-			var _g18 = this13;
-			_g18.x -= other_x6;
-			_g18.hasChanged = true;
-			var _g19 = this13;
-			_g19.y -= other_y6;
-			_g19.hasChanged = true;
-			var _g20 = this13;
-			_g20.z -= other_z6;
-			_g20.hasChanged = true;
-		}
-	}
->>>>>>> parent of 065feb0... Update CakeTest.js
 	,__class__: cake_engine_Camera
 });
 var cake_engine_Entity = function(name) {
@@ -1956,7 +1759,7 @@ $hxClasses["cake.engine.Entity"] = cake_engine_Entity;
 cake_engine_Entity.__name__ = "cake.engine.Entity";
 cake_engine_Entity.prototype = {
 	addComponent: function(type) {
-		var component = Type.createInstance(type,[]);
+		var component = Type.createInstance(type,null);
 		component.entity = this;
 		if(this.transform == null && type == cake_engine_Transform) {
 			this.transform = component;
@@ -2928,91 +2731,28 @@ cake_engine_Time.update = function(delta) {
 };
 var cake_engine_Transform = function() {
 	this.matrix = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-	this.localScale = new cake_engine__$Vector3_Vector3Impl(1.0,1.0,1.0);
-	this.localRotation = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
-	this.localPosition = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
+	this.scale = new cake_engine__$Vector3_Vector3Impl(1.0,1.0,1.0);
+	this.rotation = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
+	this.position = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
 	cake_engine_Component.call(this);
 };
 $hxClasses["cake.engine.Transform"] = cake_engine_Transform;
 cake_engine_Transform.__name__ = "cake.engine.Transform";
 cake_engine_Transform.__super__ = cake_engine_Component;
 cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
-	get_position: function() {
-		var position = this.localPosition;
-		var parent = this.entity.parent;
-		while(parent != null) {
-			var other = parent.transform.localPosition;
-			var _g = position;
-			_g.x += other.x;
-			_g.hasChanged = true;
-			var _g1 = position;
-			_g1.y += other.y;
-			_g1.hasChanged = true;
-			var _g2 = position;
-			_g2.z += other.z;
-			_g2.hasChanged = true;
-			parent = parent.parent;
-		}
-		return position;
-	}
-	,get_rotation: function() {
-		var rotation = this.localRotation;
-		var parent = this.entity.parent;
-		while(parent != null) {
-			var other = parent.transform.localRotation;
-			var _g = rotation;
-			_g.x += other.x;
-			_g.hasChanged = true;
-			var _g1 = rotation;
-			_g1.y += other.y;
-			_g1.hasChanged = true;
-			var _g2 = rotation;
-			_g2.z += other.z;
-			_g2.hasChanged = true;
-			parent = parent.parent;
-		}
-		return rotation;
-	}
-	,get_scale: function() {
-		var scale = this.localScale;
-		var parent = this.entity.parent;
-		while(parent != null) {
-			var other = parent.transform.localScale;
-			var _g = scale;
-			_g.x *= other.x;
-			_g.hasChanged = true;
-			var _g1 = scale;
-			_g1.y *= other.y;
-			_g1.hasChanged = true;
-			var _g2 = scale;
-			_g2.z *= other.z;
-			_g2.hasChanged = true;
-			parent = parent.parent;
-		}
-		return scale;
+	get_forward: function() {
+		return this.rotate(0.0,0.0,1.0);
 	}
 	,get_right: function() {
-		return this.rotate(this.localRotation,1.0,0.0,0.0);
+		return this.rotate(1.0,0.0,0.0);
 	}
 	,get_up: function() {
-		return this.rotate(this.localRotation,0.0,1.0,0.0);
+		return this.rotate(0.0,1.0,0.0);
 	}
-	,get_forward: function() {
-		return this.rotate(this.localRotation,0.0,0.0,1.0);
-	}
-	,get_localRight: function() {
-		return this.rotate(this.localRotation,1.0,0.0,0.0);
-	}
-	,get_localUp: function() {
-		return this.rotate(this.localRotation,0.0,1.0,0.0);
-	}
-	,get_localForward: function() {
-		return this.rotate(this.localRotation,0.0,0.0,1.0);
-	}
-	,rotate: function(rotation,x,y,z) {
-		var rotZ = rotation.z * 0.01745329252 * 0.5;
-		var rotY = rotation.y * 0.01745329252 * 0.5;
-		var rotX = rotation.x * 0.01745329252 * 0.5;
+	,rotate: function(x,y,z) {
+		var rotZ = this.rotation.z * 0.01745329252 * 0.5;
+		var rotY = this.rotation.y * 0.01745329252 * 0.5;
+		var rotX = this.rotation.x * 0.01745329252 * 0.5;
 		var cZ = Math.cos(rotZ);
 		var sZ = Math.sin(rotZ);
 		var cY = Math.cos(rotY);
@@ -3036,7 +2776,7 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 		return this1;
 	}
 	,rebuildMatrix: function(inverse) {
-		if(this.localPosition.hasChanged || this.localRotation.hasChanged || this.localScale.hasChanged) {
+		if(this.position.hasChanged || this.rotation.hasChanged || this.scale.hasChanged) {
 			var value = this.matrix[1] = 0.0;
 			var value1 = this.matrix[2] = value;
 			var value2 = this.matrix[3] = value1;
@@ -3050,18 +2790,36 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 			var value9 = this.matrix[5] = value8;
 			var value10 = this.matrix[10] = value9;
 			this.matrix[15] = value10;
-			this.matrix[12] = this.localPosition.x;
-			this.matrix[13] = this.localPosition.y;
-			this.matrix[14] = this.localPosition.z;
+			this.matrix[12] = this.position.x;
+			this.matrix[13] = this.position.y;
+			this.matrix[14] = this.position.z;
 			var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 			var other = this1;
 			var rad;
 			var cos;
 			var sin;
-<<<<<<< HEAD
-			if(this.localRotation.y != 0.0) {
-				rad = this.localRotation.y * 0.01745329252;
-=======
+			if(this.rotation.y != 0.0) {
+				rad = this.rotation.y * 0.01745329252;
+				cos = Math.cos(rad);
+				sin = Math.sin(rad);
+				other[10] = other[0] = cos;
+				other[14] = other[13] = other[12] = other[11] = other[9] = other[7] = other[6] = other[4] = other[3] = other[1] = 0.0;
+				other[2] = -sin;
+				other[15] = other[5] = 1.0;
+				other[8] = sin;
+				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
+			}
+			if(this.rotation.x != 0.0) {
+				rad = this.rotation.x * 0.01745329252;
+				cos = Math.cos(rad);
+				sin = Math.sin(rad);
+				other[14] = other[13] = other[12] = other[11] = other[8] = other[7] = other[4] = other[3] = other[2] = other[1] = 0.0;
+				other[15] = other[0] = 1.0;
+				other[10] = other[5] = cos;
+				other[6] = sin;
+				other[9] = -sin;
+				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
+			}
 			if(this.rotation.z != 0.0) {
 				rad = this.rotation.z * 0.01745329252;
 				cos = Math.cos(rad);
@@ -3073,57 +2831,18 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 				other[15] = other[10] = 1.0;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
-			if(this.rotation.y != 0.0) {
-				rad = this.rotation.y * 0.01745329252;
->>>>>>> parent of 065feb0... Update CakeTest.js
-				cos = Math.cos(rad);
-				sin = Math.sin(rad);
-				other[10] = other[0] = cos;
-				other[14] = other[13] = other[12] = other[11] = other[9] = other[7] = other[6] = other[4] = other[3] = other[1] = 0.0;
-				other[2] = -sin;
-				other[15] = other[5] = 1.0;
-				other[8] = sin;
-				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
-			}
-			if(this.localRotation.x != 0.0) {
-				rad = this.localRotation.x * 0.01745329252;
-				cos = Math.cos(rad);
-				sin = Math.sin(rad);
-				other[14] = other[13] = other[12] = other[11] = other[8] = other[7] = other[4] = other[3] = other[2] = other[1] = 0.0;
-				other[15] = other[0] = 1.0;
-				other[10] = other[5] = cos;
-				other[6] = sin;
-				other[9] = -sin;
-				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
-			}
-<<<<<<< HEAD
-			if(this.localRotation.z != 0.0) {
-				rad = this.localRotation.z * 0.01745329252;
-				cos = Math.cos(rad);
-				sin = Math.sin(rad);
-				other[5] = other[0] = cos;
-				other[1] = sin;
-				other[14] = other[13] = other[12] = other[11] = other[9] = other[8] = other[7] = other[6] = other[3] = other[2] = 0.0;
-				other[4] = -sin;
-				other[15] = other[10] = 1.0;
-				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
-			}
-			if(this.localScale.x != 1.0 || this.localScale.y != 1.0 || this.localScale.z != 1.0) {
-				other[0] = this.localScale.x;
-=======
 			if(this.scale.x != 1.0 || this.scale.y != 1.0 || this.scale.z != 1.0) {
 				other[0] = this.scale.x;
->>>>>>> parent of 065feb0... Update CakeTest.js
 				other[14] = other[13] = other[12] = other[11] = other[9] = other[8] = other[7] = other[6] = other[4] = other[3] = other[2] = other[1] = 0.0;
-				other[5] = this.localScale.y;
-				other[10] = this.localScale.z;
+				other[5] = this.scale.y;
+				other[10] = this.scale.z;
 				other[15] = 1.0;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
 			if(inverse) {
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.inverse(this.matrix);
 			}
-			this.localPosition.hasChanged = this.localRotation.hasChanged = this.localScale.hasChanged = false;
+			this.position.hasChanged = this.rotation.hasChanged = this.scale.hasChanged = false;
 		}
 	}
 	,__class__: cake_engine_Transform
@@ -20841,11 +20560,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-<<<<<<< HEAD
-	this.version = 690149;
-=======
-	this.version = 194954;
->>>>>>> parent of 065feb0... Update CakeTest.js
+	this.version = 131662;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
