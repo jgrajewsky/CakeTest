@@ -870,9 +870,9 @@ ApplicationMain.create = function(config) {
 	var app = new Main();
 	var _this = app.meta;
 	if(__map_reserved["build"] != null) {
-		_this.setReserved("build","692");
+		_this.setReserved("build","760");
 	} else {
-		_this.h["build"] = "692";
+		_this.h["build"] = "760";
 	}
 	var _this1 = app.meta;
 	if(__map_reserved["company"] != null) {
@@ -1025,14 +1025,31 @@ var Main = function() {
 	var _g = 0;
 	while(_g < 10000) {
 		var _ = _g++;
-		var mesh = new cake_engine_Entity("Mesh");
+		var mesh = new cake_engine_Entity("Mesh" + Math.random());
 		var tttt = mesh.addComponent(cake_engine_Transform);
 		var this1 = new cake_engine__$Vector3_Vector3Impl(Math.random() * 2000.0 - 1000.0,Math.random() * 2000.0 - 1000.0,Math.random() * 2000.0 - 1000.0);
-		tttt.position = this1;
+		tttt.localPosition = this1;
 		var this2 = new cake_engine__$Vector3_Vector3Impl(Math.random() * 360.0,Math.random() * 360.0,Math.random() * 360.0);
-		tttt.rotation = this2;
-		var this3 = new cake_engine__$Vector3_Vector3Impl(-0.2,-0.2,-0.2);
-		tttt.scale = this3;
+		tttt.localRotation = this2;
+		var this_hasChanged = true;
+		var this_x = 1.0;
+		this_hasChanged = true;
+		var this_y = 1.0;
+		this_hasChanged = true;
+		var this_z = 1.0;
+		this_hasChanged = true;
+		var this3 = new cake_engine__$Vector3_Vector3Impl(this_x,this_y,this_z);
+		var this4 = this3;
+		var _g1 = this4;
+		_g1.x *= 0.2;
+		_g1.hasChanged = true;
+		var _g2 = this4;
+		_g2.y *= 0.2;
+		_g2.hasChanged = true;
+		var _g3 = this4;
+		_g3.z *= 0.2;
+		_g3.hasChanged = true;
+		tttt.localScale = this4;
 		var aa = mesh.addComponent(cake_engine_MeshRenderer);
 		aa.onCreate();
 	}
@@ -1100,8 +1117,6 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 	,onWindowCreate: function() {
 		this.__window.__backend.setFrameRate(1000);
 		this.__window.set_resizable(true);
-		this.__window.set_width(1920);
-		this.__window.set_height(600);
 		cake_engine_Screen.width = this.__window.__width;
 		cake_engine_Screen.height = this.__window.__height;
 		Main.gl = this.__window.context.webgl;
@@ -1172,7 +1187,7 @@ Main.prototype = $extend(lime_app_Application.prototype,{
 		cake_engine_Time.unscaledTime += cake_engine_Time.unscaledDeltaTime;
 		++cake_engine_Time.frameCount;
 		cake_engine_Input.update();
-		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 198, className : "Main", methodName : "update"});
+		haxe_Log.trace(1.0 / cake_engine_Time.unscaledDeltaTime,{ fileName : "Main.hx", lineNumber : 191, className : "Main", methodName : "update"});
 		this.camera.entity.onUpdate();
 		var this1 = cake_engine_Input.mouseDelta;
 		this1.x = 0.0;
@@ -1515,8 +1530,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 	onUpdate: function() {
 		var speed = cake_engine_Time.deltaTime * 100.0;
 		if(cake_engine_Input.keyStates[120] != 0) {
-			var this1 = this.entity.transform.position;
-			var this2 = this.entity.transform.rotate(0.0,0.0,1.0);
+			var this1 = this.entity.transform.localPosition;
+			var _this = this.entity.transform;
+			var this2 = _this.rotate(_this.localRotation,0.0,0.0,1.0);
 			var other_hasChanged = true;
 			var other_x = this2.x;
 			other_hasChanged = true;
@@ -1541,8 +1557,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g2.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[116] != 0) {
-			var this3 = this.entity.transform.position;
-			var this4 = this.entity.transform.rotate(0.0,0.0,1.0);
+			var this3 = this.entity.transform.localPosition;
+			var _this1 = this.entity.transform;
+			var this4 = _this1.rotate(_this1.localRotation,0.0,0.0,1.0);
 			var other_hasChanged1 = true;
 			var other_x1 = this4.x;
 			other_hasChanged1 = true;
@@ -1567,8 +1584,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g5.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[98] != 0) {
-			var this5 = this.entity.transform.position;
-			var this6 = this.entity.transform.rotate(1.0,0.0,0.0);
+			var this5 = this.entity.transform.localPosition;
+			var _this2 = this.entity.transform;
+			var this6 = _this2.rotate(_this2.localRotation,1.0,0.0,0.0);
 			var other_hasChanged2 = true;
 			var other_x2 = this6.x;
 			other_hasChanged2 = true;
@@ -1593,8 +1611,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g8.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[101] != 0) {
-			var this7 = this.entity.transform.position;
-			var this8 = this.entity.transform.rotate(1.0,0.0,0.0);
+			var this7 = this.entity.transform.localPosition;
+			var _this3 = this.entity.transform;
+			var this8 = _this3.rotate(_this3.localRotation,1.0,0.0,0.0);
 			var other_hasChanged3 = true;
 			var other_x3 = this8.x;
 			other_hasChanged3 = true;
@@ -1619,8 +1638,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g11.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[132] != 0) {
-			var this9 = this.entity.transform.position;
-			var this10 = this.entity.transform.rotate(0.0,1.0,0.0);
+			var this9 = this.entity.transform.localPosition;
+			var _this4 = this.entity.transform;
+			var this10 = _this4.rotate(_this4.localRotation,0.0,1.0,0.0);
 			var other_hasChanged4 = true;
 			var other_x4 = this10.x;
 			other_hasChanged4 = true;
@@ -1645,8 +1665,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g14.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[8] != 0) {
-			var this11 = this.entity.transform.position;
-			var this12 = this.entity.transform.rotate(0.0,1.0,0.0);
+			var this11 = this.entity.transform.localPosition;
+			var _this5 = this.entity.transform;
+			var this12 = _this5.rotate(_this5.localRotation,0.0,1.0,0.0);
 			var other_hasChanged5 = true;
 			var other_x5 = this12.x;
 			other_hasChanged5 = true;
@@ -1671,12 +1692,12 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			_g17.hasChanged = true;
 		}
 		if(cake_engine_Input.keyStates[166] != 0) {
-			var _this = this.entity.transform.rotation;
-			var value = this.entity.transform.rotation.x - cake_engine_Input.mouseDelta.y * 0.05;
+			var _this6 = this.entity.transform.localRotation;
+			var value = this.entity.transform.localRotation.x - cake_engine_Input.mouseDelta.y * 0.05;
 			var a = value > -90.0 ? value : -90.0;
-			_this.x = a < 90.0 ? a : 90.0;
-			_this.hasChanged = true;
-			var _g18 = this.entity.transform.rotation;
+			_this6.x = a < 90.0 ? a : 90.0;
+			_this6.hasChanged = true;
+			var _g18 = this.entity.transform.localRotation;
 			_g18.y -= cake_engine_Input.mouseDelta.x * 0.05;
 			_g18.hasChanged = true;
 		}
@@ -1688,13 +1709,12 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 		var location = Main.gl.getUniformLocation(Main.shader.program,"u_matrix");
 		var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 		var render = this1;
-		var a = true;
 		var _g = 0;
 		var _g1 = cake_engine_MeshRenderer.all;
 		while(_g < _g1.length) {
 			var renderer = _g1[_g];
 			++_g;
-			var this2 = renderer.entity.transform.rotation;
+			var this2 = renderer.entity.transform.localRotation;
 			var other = cake_engine_Time.deltaTime * 5.0;
 			var _g2 = this2;
 			_g2.x += other;
@@ -1725,9 +1745,9 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			this.floatArray[14] = render[14];
 			this.floatArray[15] = render[15];
 			lime_graphics__$WebGLRenderContext_WebGLRenderContext_$Impl_$.uniformMatrix4fv(Main.gl,location,false,this.floatArray);
-			var x = renderer.entity.transform.scale.x >= 0.0;
-			var y = renderer.entity.transform.scale.y >= 0.0;
-			var z = renderer.entity.transform.scale.z >= 0.0;
+			var x = renderer.entity.transform.localScale.x >= 0.0;
+			var y = renderer.entity.transform.localScale.y >= 0.0;
+			var z = renderer.entity.transform.localScale.z >= 0.0;
 			Main.gl.cullFace(x && y && z || !x && y && z || x && !y && z || x && y && !z ? Main.gl.BACK : Main.gl.FRONT);
 			Main.gl.drawArrays(Main.gl.TRIANGLES,0,96);
 		}
@@ -1735,11 +1755,8 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 	,rebuildMatrix: function() {
 		var ratio = cake_engine_Screen.width / cake_engine_Screen.height;
 		if(this.perspective) {
-			var left = -1.0 * this.size * ratio;
-			var right = -left;
-			var bottom = -1.0 * this.size;
-			var top = -bottom;
-			this.matrix[0] = 1.0 / -left;
+			var tan = Math.tan(this.fieldOfView * 0.01745329252 / 2.0);
+			this.matrix[0] = 1.0 / (ratio * tan);
 			var value = this.matrix[1] = 0.0;
 			var value1 = this.matrix[2] = value;
 			var value2 = this.matrix[3] = value1;
@@ -1748,16 +1765,15 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			var value5 = this.matrix[7] = value4;
 			var value6 = this.matrix[8] = value5;
 			var value7 = this.matrix[9] = value6;
-			var value8 = this.matrix[11] = value7;
-			var value9 = this.matrix[12] = value8;
-			this.matrix[13] = value9;
-			this.matrix[5] = 1.0 / -bottom;
-			this.matrix[10] = -2.0 / (this.zFar - this.zNear);
-			this.matrix[14] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
-			this.matrix[15] = 1.0;
+			var value8 = this.matrix[12] = value7;
+			var value9 = this.matrix[13] = value8;
+			this.matrix[15] = value9;
+			this.matrix[5] = 1.0 / tan;
+			this.matrix[10] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
+			this.matrix[11] = -1.0;
+			this.matrix[14] = -(2.0 * this.zFar * this.zNear) / (this.zFar - this.zNear);
 		} else {
-			var tan = Math.tan(this.fieldOfView * 0.01745329252 / 2.0);
-			this.matrix[0] = 1.0 / (ratio * tan);
+			this.matrix[0] = 1.0 / (this.size * ratio);
 			var value10 = this.matrix[1] = 0.0;
 			var value11 = this.matrix[2] = value10;
 			var value12 = this.matrix[3] = value11;
@@ -1766,13 +1782,13 @@ cake_engine_Camera.prototype = $extend(cake_engine_Component.prototype,{
 			var value15 = this.matrix[7] = value14;
 			var value16 = this.matrix[8] = value15;
 			var value17 = this.matrix[9] = value16;
-			var value18 = this.matrix[12] = value17;
-			var value19 = this.matrix[13] = value18;
-			this.matrix[15] = value19;
-			this.matrix[5] = 1.0 / tan;
-			this.matrix[10] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
-			this.matrix[11] = -1.0;
-			this.matrix[14] = -(2.0 * this.zFar * this.zNear) / (this.zFar - this.zNear);
+			var value18 = this.matrix[11] = value17;
+			var value19 = this.matrix[12] = value18;
+			this.matrix[13] = value19;
+			this.matrix[5] = 1.0 / this.size;
+			this.matrix[10] = -2.0 / (this.zFar - this.zNear);
+			this.matrix[14] = -(this.zFar + this.zNear) / (this.zFar - this.zNear);
+			this.matrix[15] = 1.0;
 		}
 	}
 	,__class__: cake_engine_Camera
@@ -1787,7 +1803,7 @@ $hxClasses["cake.engine.Entity"] = cake_engine_Entity;
 cake_engine_Entity.__name__ = "cake.engine.Entity";
 cake_engine_Entity.prototype = {
 	addComponent: function(type) {
-		var component = Type.createInstance(type,null);
+		var component = Type.createInstance(type,[]);
 		component.entity = this;
 		if(this.transform == null && type == cake_engine_Transform) {
 			this.transform = component;
@@ -2759,28 +2775,91 @@ cake_engine_Time.update = function(delta) {
 };
 var cake_engine_Transform = function() {
 	this.matrix = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
-	this.scale = new cake_engine__$Vector3_Vector3Impl(1.0,1.0,1.0);
-	this.rotation = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
-	this.position = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
+	this.localScale = new cake_engine__$Vector3_Vector3Impl(1.0,1.0,1.0);
+	this.localRotation = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
+	this.localPosition = new cake_engine__$Vector3_Vector3Impl(0.0,0.0,0.0);
 	cake_engine_Component.call(this);
 };
 $hxClasses["cake.engine.Transform"] = cake_engine_Transform;
 cake_engine_Transform.__name__ = "cake.engine.Transform";
 cake_engine_Transform.__super__ = cake_engine_Component;
 cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
-	get_right: function() {
-		return this.rotate(1.0,0.0,0.0);
+	get_position: function() {
+		var position = this.localPosition;
+		var parent = this.entity.parent;
+		while(parent != null) {
+			var other = parent.transform.localPosition;
+			var _g = position;
+			_g.x += other.x;
+			_g.hasChanged = true;
+			var _g1 = position;
+			_g1.y += other.y;
+			_g1.hasChanged = true;
+			var _g2 = position;
+			_g2.z += other.z;
+			_g2.hasChanged = true;
+			parent = parent.parent;
+		}
+		return position;
+	}
+	,get_rotation: function() {
+		var rotation = this.localRotation;
+		var parent = this.entity.parent;
+		while(parent != null) {
+			var other = parent.transform.localRotation;
+			var _g = rotation;
+			_g.x += other.x;
+			_g.hasChanged = true;
+			var _g1 = rotation;
+			_g1.y += other.y;
+			_g1.hasChanged = true;
+			var _g2 = rotation;
+			_g2.z += other.z;
+			_g2.hasChanged = true;
+			parent = parent.parent;
+		}
+		return rotation;
+	}
+	,get_scale: function() {
+		var scale = this.localScale;
+		var parent = this.entity.parent;
+		while(parent != null) {
+			var other = parent.transform.localScale;
+			var _g = scale;
+			_g.x *= other.x;
+			_g.hasChanged = true;
+			var _g1 = scale;
+			_g1.y *= other.y;
+			_g1.hasChanged = true;
+			var _g2 = scale;
+			_g2.z *= other.z;
+			_g2.hasChanged = true;
+			parent = parent.parent;
+		}
+		return scale;
+	}
+	,get_right: function() {
+		return this.rotate(this.localRotation,1.0,0.0,0.0);
 	}
 	,get_up: function() {
-		return this.rotate(0.0,1.0,0.0);
+		return this.rotate(this.localRotation,0.0,1.0,0.0);
 	}
 	,get_forward: function() {
-		return this.rotate(0.0,0.0,1.0);
+		return this.rotate(this.localRotation,0.0,0.0,1.0);
 	}
-	,rotate: function(x,y,z) {
-		var rotZ = this.rotation.z * 0.01745329252 * 0.5;
-		var rotY = this.rotation.y * 0.01745329252 * 0.5;
-		var rotX = this.rotation.x * 0.01745329252 * 0.5;
+	,get_localRight: function() {
+		return this.rotate(this.localRotation,1.0,0.0,0.0);
+	}
+	,get_localUp: function() {
+		return this.rotate(this.localRotation,0.0,1.0,0.0);
+	}
+	,get_localForward: function() {
+		return this.rotate(this.localRotation,0.0,0.0,1.0);
+	}
+	,rotate: function(rotation,x,y,z) {
+		var rotZ = rotation.z * 0.01745329252 * 0.5;
+		var rotY = rotation.y * 0.01745329252 * 0.5;
+		var rotX = rotation.x * 0.01745329252 * 0.5;
 		var cZ = Math.cos(rotZ);
 		var sZ = Math.sin(rotZ);
 		var cY = Math.cos(rotY);
@@ -2804,7 +2883,7 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 		return this1;
 	}
 	,rebuildMatrix: function(inverse) {
-		if(this.position.hasChanged || this.rotation.hasChanged || this.scale.hasChanged) {
+		if(this.localPosition.hasChanged || this.localRotation.hasChanged || this.localScale.hasChanged) {
 			var value = this.matrix[1] = 0.0;
 			var value1 = this.matrix[2] = value;
 			var value2 = this.matrix[3] = value1;
@@ -2818,16 +2897,16 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 			var value9 = this.matrix[5] = value8;
 			var value10 = this.matrix[10] = value9;
 			this.matrix[15] = value10;
-			this.matrix[12] = this.position.x;
-			this.matrix[13] = this.position.y;
-			this.matrix[14] = this.position.z;
+			this.matrix[12] = this.localPosition.x;
+			this.matrix[13] = this.localPosition.y;
+			this.matrix[14] = this.localPosition.z;
 			var this1 = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
 			var other = this1;
 			var rad;
 			var cos;
 			var sin;
-			if(this.rotation.y != 0.0) {
-				rad = this.rotation.y * 0.01745329252;
+			if(this.localRotation.y != 0.0) {
+				rad = this.localRotation.y * 0.01745329252;
 				cos = Math.cos(rad);
 				sin = Math.sin(rad);
 				other[10] = other[0] = cos;
@@ -2837,8 +2916,8 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 				other[8] = sin;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
-			if(this.rotation.x != 0.0) {
-				rad = this.rotation.x * 0.01745329252;
+			if(this.localRotation.x != 0.0) {
+				rad = this.localRotation.x * 0.01745329252;
 				cos = Math.cos(rad);
 				sin = Math.sin(rad);
 				other[14] = other[13] = other[12] = other[11] = other[8] = other[7] = other[4] = other[3] = other[2] = other[1] = 0.0;
@@ -2848,8 +2927,8 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 				other[9] = -sin;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
-			if(this.rotation.z != 0.0) {
-				rad = this.rotation.z * 0.01745329252;
+			if(this.localRotation.z != 0.0) {
+				rad = this.localRotation.z * 0.01745329252;
 				cos = Math.cos(rad);
 				sin = Math.sin(rad);
 				other[5] = other[0] = cos;
@@ -2859,18 +2938,18 @@ cake_engine_Transform.prototype = $extend(cake_engine_Component.prototype,{
 				other[15] = other[10] = 1.0;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
-			if(this.scale.x != 1.0 || this.scale.y != 1.0 || this.scale.z != 1.0) {
-				other[0] = this.scale.x;
+			if(this.localScale.x != 1.0 || this.localScale.y != 1.0 || this.localScale.z != 1.0) {
+				other[0] = this.localScale.x;
 				other[14] = other[13] = other[12] = other[11] = other[9] = other[8] = other[7] = other[6] = other[4] = other[3] = other[2] = other[1] = 0.0;
-				other[5] = this.scale.y;
-				other[10] = this.scale.z;
+				other[5] = this.localScale.y;
+				other[10] = this.localScale.z;
 				other[15] = 1.0;
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.multiplyCompound(this.matrix,other);
 			}
 			if(inverse) {
 				cake_engine__$Matrix4x4_Matrix4x4_$Impl_$.inverse(this.matrix);
 			}
-			this.position.hasChanged = this.rotation.hasChanged = this.scale.hasChanged = false;
+			this.localPosition.hasChanged = this.localRotation.hasChanged = this.localScale.hasChanged = false;
 		}
 	}
 	,__class__: cake_engine_Transform
@@ -20588,7 +20667,7 @@ var lime_utils_AssetCache = function() {
 	this.audio = new haxe_ds_StringMap();
 	this.font = new haxe_ds_StringMap();
 	this.image = new haxe_ds_StringMap();
-	this.version = 341651;
+	this.version = 690149;
 };
 $hxClasses["lime.utils.AssetCache"] = lime_utils_AssetCache;
 lime_utils_AssetCache.__name__ = "lime.utils.AssetCache";
