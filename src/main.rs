@@ -1,13 +1,7 @@
 use cake::*;
 
 fn main() {
-    let e = Entity::new();
-    start();
-}
-
-pub fn awesome_function(number:f64) -> f64 {
-    println!("asdsadsad {}", number);
-    number
+    cake::start();
 }
 
 struct TestSystem ();
