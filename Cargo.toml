@@ -1,0 +1,12 @@
+[package]
+name = "cake_test"
+version = "0.1.0"
+authors = ["jgrajewsky <jgrajewsky@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+cake = { path = "../cake" }
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/main.rs"
