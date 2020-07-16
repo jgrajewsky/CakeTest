@@ -1,18 +1,28 @@
 use cake::*;
 
 fn main() {
-    cake::start();
+    let mut scene = Scene::new();
+    let mut entity = Entity::new();
+    entity
+        .attach(TestBehavior())
+        .attach(TestBehavior())
+        .attach(TestBehavior())
+        .attach(TestBehavior());
+    scene.add_entity(entity);
+    start();
 }
 
-struct TestSystem ();
+struct TestSystem();
 
 impl System for TestSystem {
-    
+    type Data = ();
+
+    fn update(&mut self, data: Self::Data) {}
 }
 
 #[derive(Component)]
-struct TestBehavior ();
+struct TestBehavior();
 
 impl Behavior for TestBehavior {
-
+    fn update(&self) {}
 }
